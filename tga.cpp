@@ -10,7 +10,7 @@
 
 // define the header struct for
 // loading the TGA header info.
-#pragma pack(1)
+#pragma pack(1) // pack it so that I can have shorts & chars in sequence and read directly from file memory
 struct TGAHeader{
     char    id_length;
     char    map_type;
@@ -172,4 +172,5 @@ GLuint TGA::getTextureHandle(void)
 {
 	return textureHandle;
 }
+
 
