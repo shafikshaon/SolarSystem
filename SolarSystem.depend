@@ -1,0 +1,73 @@
+# depslib dependency file v1.0
+1512753777 source:c:\users\shafik shaon\dropbox\11th semester\cse422 (computer graphics lab)\solarsystem\camera.cpp
+	<Windows.h>
+	<gl\GL.h>
+	<gl\GLU.h>
+	<cmath>
+	"camera.h"
+
+1512753819 c:\users\shafik shaon\dropbox\11th semester\cse422 (computer graphics lab)\solarsystem\camera.h
+
+1512754235 source:c:\users\shafik shaon\dropbox\11th semester\cse422 (computer graphics lab)\solarsystem\main.cpp
+	<cmath>
+	<cstdlib>
+	<Windows.h>
+	<gl\gl.h>
+	<gl\glut.h>
+	<GL\glu.h>
+	"tga.h"
+	"solarsystem.h"
+	"camera.h"
+	"globals.h"
+
+1512754353 c:\users\shafik shaon\dropbox\11th semester\cse422 (computer graphics lab)\solarsystem\tga.h
+	<Windows.h>
+	<gl\GL.h>
+
+1512754070 c:\users\shafik shaon\dropbox\11th semester\cse422 (computer graphics lab)\solarsystem\solarsystem.h
+	<Windows.h>
+	<gl\GL.h>
+	<vector>
+	"planet.h"
+
+1512754010 c:\users\shafik shaon\dropbox\11th semester\cse422 (computer graphics lab)\solarsystem\planet.h
+	<Windows.h>
+	<gl\GL.h>
+	<vector>
+	"moon.h"
+
+1512754280 c:\users\shafik shaon\dropbox\11th semester\cse422 (computer graphics lab)\solarsystem\moon.h
+	<Windows.h>
+	<gl\GL.h>
+
+1512753886 c:\users\shafik shaon\dropbox\11th semester\cse422 (computer graphics lab)\solarsystem\globals.h
+
+1512754285 source:c:\users\shafik shaon\dropbox\11th semester\cse422 (computer graphics lab)\solarsystem\moon.cpp
+	"moon.h"
+	<cmath>
+	<Windows.h>
+	<gl\GL.h>
+	<gl\GLU.h>
+	<gl\glut.h>
+	"globals.h"
+
+1512753985 source:c:\users\shafik shaon\dropbox\11th semester\cse422 (computer graphics lab)\solarsystem\planet.cpp
+	"planet.h"
+	<cmath>
+	<Windows.h>
+	<gl\GL.h>
+	<gl\GLU.h>
+	<gl\glut.h>
+	"globals.h"
+
+1512754381 source:c:\users\shafik shaon\dropbox\11th semester\cse422 (computer graphics lab)\solarsystem\solarsystem.cpp
+	"solarsystem.h"
+
+1512754105 source:c:\users\shafik shaon\dropbox\11th semester\cse422 (computer graphics lab)\solarsystem\tga.cpp
+	"tga.h"
+	<cstdio>
+	<cstdlib>
+	<Windows.h>
+	<gl\GL.h>
+	<gl\GLU.h>
+

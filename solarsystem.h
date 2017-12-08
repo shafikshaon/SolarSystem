@@ -1,4 +1,3 @@
-
 #ifndef RYAN_SOLARSYSTEM_H
 #define RYAN_SOLARSYSTEM_H
 
@@ -41,3 +40,4 @@ public:
 };
 
 #endif
+

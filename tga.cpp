@@ -8,8 +8,7 @@
 #include <gl\GL.h>
 #include <gl\GLU.h>
 
-// define the header struct for
-// loading the TGA header info.
+
 #pragma pack(1)
 struct TGAHeader{
     char    id_length;
@@ -29,39 +28,39 @@ struct TGAHeader{
 
 TGA::TGA(char* imagePath)
 {
-    FILE* file = NULL; // the file handle
-    TGAHeader header; // struct for the header info
+    FILE* file = NULL;
+    TGAHeader header;
     char* pixels, *buffer;
 
-	// column counter, row counter, i & j loop counters, and bytes per pixel
+
     int c, r, i, j, bytespp = 4;
     char n, packet_header;
     char pixel[4];
 
-    // open the file
+
     file = fopen(imagePath, "rb");
 
-    // read the header
+
     fread(&header, 18, 1, file);
 
-    bytespp = header.bpp / 8; // bytes per pixel
+    bytespp = header.bpp / 8;
 
 	pixels = (char*)malloc(bytespp * header.width * header.height);
 
-    // header type 2 is uncompressed RGB data without a color map / pallette
+
     if (header.type == 2)
 	{
-        // seek to the start of the data
+
         fseek(file, header.map_start + header.map_length * bytespp + 18, SEEK_SET);
 
-        // read the pixel data into a buffer
+
         buffer = (char*)malloc(bytespp * header.width * header.height);
         fread(buffer, bytespp, header.width * header.height, file);
 
-        // plot the pixel data into pixels buffer
-        for (c = 0; c < header.width; c ++) // count up columns
+
+        for (c = 0; c < header.width; c ++)
 		{
-            for (r = 0; r < header.height; r ++) // rows
+            for (r = 0; r < header.height; r ++)
 			{
                 if (bytespp == 4)
 				{
@@ -89,29 +88,28 @@ TGA::TGA(char* imagePath)
         free(buffer);
 
     }
-	else if (header.type == 10) // run length encoded, non color mapped rgb
+	else if (header.type == 10)
 	{
-        // find the start of the data
+
         fseek(file, header.map_start + header.map_length * bytespp + 18, SEEK_SET);
 
-        c = 0; r = header.height - 1; // start at the top left
-        // work through the bitmap
+        c = 0; r = header.height - 1;
+
         while (r >= 0)
 		{
-            // read in the packet header
+
             fread(&packet_header, sizeof(packet_header), 1, file);
 
-            // find the number of reps
             n = packet_header & 0x7F;
 
             *((int*)pixel) = 0;
-            if (n != packet_header) // if bit = 1, the next pixel repeated N times
+            if (n != packet_header)
                 fread(&pixel, bytespp, 1, file);
 
-            // loop n times
+
             for (i = 0; i < n + 1; i++)
 			{
-                if (n == packet_header) // if bit = 0, N individual pixels
+                if (n == packet_header)
                     fread(&pixel, bytespp, 1, file);
 
                 if (bytespp == 4)
@@ -134,7 +132,7 @@ TGA::TGA(char* imagePath)
                     pixels[(c + r * header.width) * bytespp + 2] =
                         pixel[0];
                 }
-                // move to the next pixel
+
                 c += 1;
                 if (c >= header.width)
 				{
@@ -144,10 +142,10 @@ TGA::TGA(char* imagePath)
             }
         }
     }
-    // close the file
+
     fclose(file);
 
-	// make a gl texture
+
 	glGenTextures(1, &textureHandle);
 
 	glBindTexture(GL_TEXTURE_2D, textureHandle);
@@ -164,7 +162,7 @@ TGA::TGA(char* imagePath)
 	gluBuild2DMipmaps( GL_TEXTURE_2D, 3, header.width, header.height,
                    GL_RGB, GL_UNSIGNED_BYTE, pixels);
 
-	// delete the pixel data
+
 	free(pixels);
 }
 
@@ -172,4 +170,5 @@ GLuint TGA::getTextureHandle(void)
 {
 	return textureHandle;
 }
+
 
