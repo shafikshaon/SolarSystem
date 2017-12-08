@@ -20,21 +20,16 @@ Planet::Planet(float distanceFromSun, float orbitTime, float rotationTime, float
 	this->textureHandle = textureHandle;
 }
 
-// Calculate its position in 3d spacein the orbit using the given time value
 void Planet::calculatePosition(float time)
 {
-	// find the angle of orientation of the orbit around the sun
 	float angle = time * 3.1419f / orbitTime;
 
-	// use trig to find the position in space
 	position[0] = sin(angle) * distanceFromSun;
 	position[1] = cos(angle) * distanceFromSun;
 	position[2] = 0;
 
-	// find the rotation of the planet around its axis
 	rotation = time * 360 / rotationTime;
 
-	// calculate positions of moons
 	for (int i = 0; i < moons.size(); i++)
 	{
 		moons[i].calculatePosition(time);
@@ -46,22 +41,17 @@ void Planet::render(void)
 {
 	glPushMatrix();
 
-	// translate to the right positon
 	glTranslatef(position[0] * distanceScale, position[1] * distanceScale, position[2] * distanceScale);
 
-	// Draw the moons
 	for (int i = 0; i < moons.size(); i++)
 	{
 		moons[i].render();
 	}
 
-	/// rotate for the planet's spin
 	glRotatef(rotation, 0.0f, 0.0f, 1.0f);
 
-	// bind the planets texture
 	glBindTexture(GL_TEXTURE_2D, textureHandle);
 
-	// render as a GLU sphere quadric object
 	GLUquadricObj* quadric = gluNewQuadric();
 	gluQuadricTexture(quadric, true);
 	gluQuadricNormals(quadric, GLU_SMOOTH);
@@ -84,13 +74,10 @@ void Planet::render(void)
 	glPopMatrix();
 }
 
-// render this planets orbit circle
 void Planet::renderOrbit(void)
 {
-	// draw a line strip
 	glBegin(GL_LINE_STRIP);
 
-	// loop round from 0 to 2*PI and draw around the radius of the orbit using trigonometry
 	for (float angle = 0.0f; angle < 6.283185307f; angle += 0.05f)
 	{
 		glVertex3f(sin(angle) * distanceFromSun * distanceScale, cos(angle) * distanceFromSun * distanceScale, 0.0f);
@@ -99,11 +86,8 @@ void Planet::renderOrbit(void)
 
 	glEnd();
 
-	// render the moons' orbit
 	glPushMatrix();
-	// translate to the center of this planet to draw the moon orbit around it
 	glTranslatef(position[0] * distanceScale, position[1] * distanceScale, position[2] * distanceScale);
-	// draw all moon orbits
 	for (int i = 0; i < moons.size(); i++)
 	{
 		moons[i].renderOrbit();
@@ -112,22 +96,17 @@ void Planet::renderOrbit(void)
 
 }
 
-
-// Get its position in 3d world space units (after scaling) and put it into the 3d vector
 void Planet::getPosition(float* vec)
 {
 	vec[0] = position[0] * distanceScale;
 	vec[1] = position[1] * distanceScale;
 	vec[2] = position[2] * distanceScale;
 }
-
-// get the radius of this planet
 float Planet::getRadius(void)
 {
 	return radius;
 }
 
-// add a moon to this planet
 void Planet::addMoon(float distanceFromPlanet, float orbitTime, float rotationTime, float radius, GLuint textureHandle)
 {
 	moons.push_back(Moon(distanceFromPlanet, orbitTime, rotationTime, radius, textureHandle));
